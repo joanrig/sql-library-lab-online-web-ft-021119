@@ -48,8 +48,12 @@ LIMIT 1;"
 end
 
 def select_character_names_and_number_of_books_they_are_in
-  "SELECT characters.name, COUNT(character_books.book_id)
-FROM characters
+  "SELECT characters.name, COUNT(books.id)
+FROM books
 INNER JOIN character_books
-ON characters.id = character_books.character_id;"
+ON books.id = character_books.book_id
+INNER JOIN characters
+ON character_books.character_id = characters.id
+GROUP BY characters.name
+ORDER BY COUNT(books.id) DESC;"
 end
